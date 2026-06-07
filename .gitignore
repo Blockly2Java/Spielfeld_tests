@@ -1,0 +1,30 @@
+# Build outputs
+.gradle/
+.gradle_home/
+build/
+target/
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local dev artifacts
+home/
+
+# Gradle wrapper (if using system gradle)
+# gradle/wrapper/gradle-wrapper.jar
+
+# Compiled classes
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+logs/

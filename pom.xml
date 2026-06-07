@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- MODIFY FOR YOUR EXERCISE -->
+  <groupId>de.blockly2java.exercises</groupId>
+  <artifactId>template_tests</artifactId>
+
+  <name>Blockly2Java Exercise 'Template' Tests</name>
+  <description>Contains test cases for the Template exercise</description>
+  <url>https://github.com/Blockly2Java/Template_tests</url>
+  <scm>
+    <connection>scm:git:git://github.com/Blockly2Java/Template_tests.git</connection>
+    <developerConnection>scm:git:ssh://github.com:Blockly2Java/Template_tests.git</developerConnection>
+    <url>https://github.com/Blockly2Java/Template_tests</url>
+  </scm>
+  <!-- /MODIFY FOR YOUR EXERCISE -->
+
+  <version>1.0.0-SNAPSHOT</version>  <!-- Version modified via Github Workflow -->
+  <packaging>jar</packaging>
+  <licenses>
+    <license>
+      <name>CC BY 4.0</name>
+      <url>https://creativecommons.org/licenses/by/4.0/</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>ValentinHerrmann</id>
+      <name>Valentin Herrmann</name>
+      <email>mail@valentin-herrmann.com</email>
+    </developer>
+  </developers>
+
+
+  <properties>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>26</javafx.version>
+    <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+    <argLine>-Dfile.encoding=UTF-8</argLine>    <!-- Default to assignment -->
+    <exercise.src.dir>${project.basedir}/assignment/src</exercise.src.dir>
+  </properties>
+  <profiles>
+    <profile>
+      <id>template</id>
+      <properties>
+        <exercise.src.dir>${project.basedir}/../template/src</exercise.src.dir>
+        <profile.sourceDirectory>${project.basedir}/../template/src</profile.sourceDirectory>
+      </properties>
+    </profile>
+    <profile>
+      <id>solution</id>
+      <properties>
+        <exercise.src.dir>${project.basedir}/../solution/src</exercise.src.dir>
+        <profile.sourceDirectory>${project.basedir}/../solution/src</profile.sourceDirectory>
+      </properties>
+    </profile>
+  </profiles>
+  <dependencies>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.24.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>1.10.2</version>
+    </dependency>
+    <dependency>
+      <groupId>de.tum.in.ase</groupId>
+      <artifactId>artemis-java-test-sandbox</artifactId>
+      <version>1.15.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.valentinherrmann</groupId>
+      <artifactId>levenshtein-testing-framework</artifactId>
+      <version>[1.0.0,)</version>
+    </dependency>
+    <dependency>
+      <groupId>de.blockly2java</groupId>
+      <artifactId>graphics</artifactId>
+      <version>[0.1.0,)</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <!-- 
+      Set sourceDirectory to test/ so that maven-source-plugin and maven-javadoc-plugin 
+      pick up the test sources for publishing to Maven Central.
+      The JAR plugin already packages test classes as the main artifact via classesDirectory.
+      The template/solution profiles override sourceDirectory to point to their respective src dirs.
+    -->
+    <sourceDirectory>${project.basedir}/test</sourceDirectory>
+    <testSourceDirectory>${project.basedir}/test</testSourceDirectory>
+    <testResources>
+      <testResource>
+        <directory>${project.basedir}/test</directory>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>enforce-no-student-code-in-trusted-packages</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <rules>
+            <requireFilesDontExist>
+              <files>
+                <file>${project.build.outputDirectory}/ch/qos/logback/</file>
+                <file>${project.build.outputDirectory}/com/intellij/</file>
+                <file>${project.build.outputDirectory}/com/sun/</file>
+                <file>${project.build.outputDirectory}/de/tum/in/test/api/</file>
+                <file>${project.build.outputDirectory}/java/</file>
+                <file>${project.build.outputDirectory}/javax/</file>
+                <file>${project.build.outputDirectory}/jdk/</file>
+                <file>${project.build.outputDirectory}/net/jqwik/</file>
+                <file>${project.build.outputDirectory}/org/apache/</file>
+                <file>${project.build.outputDirectory}/org/assertj/</file>
+                <file>${project.build.outputDirectory}/org/eclipse/</file>
+                <file>${project.build.outputDirectory}/org/jacoco/</file>
+                <file>${project.build.outputDirectory}/org/json/</file>
+                <file>${project.build.outputDirectory}/org/junit/</file>
+                <file>${project.build.outputDirectory}/org/opentest4j/</file>
+                <file>${project.build.outputDirectory}/sun/</file>
+                <file>${project.build.outputDirectory}/org/gradle/</file>
+                <file>${project.build.outputDirectory}/worker/org/gradle/</file>
+                <file>${project.build.outputDirectory}/com/github/javaparser/</file>
+              </files>
+            </requireFilesDontExist>
+          </rules>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <source>25</source>
+          <target>25</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+        <configuration>
+          <!-- Package compiled tests/resources as the main artifact. -->
+          <classesDirectory>${project.build.testOutputDirectory}</classesDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.9.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+          <tokenAuth>true</tokenAuth>
+        </configuration>
+      </plugin>
+
+
+      <!-- Source plugin: attach sources - uses sourceDirectory from properties (set to test/) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Generates Javadoc Jars from test sources -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.6.3</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <failOnError>false</failOnError>
+          <additionalJOption>-Xdoclint:none</additionalJOption>
+        </configuration>
+      </plugin>
+
+      <!-- Signs the artifacts with GPG -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <configuration>
+              <!-- Use GPG_PASSPHRASE environment variable -->
+              <passphrase>${env.GPG_PASSPHRASE}</passphrase>
+              <!-- Prevent gpg from using pinentry programs -->
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Automates deployment to Sonatype and releases to Maven Central -->
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.13</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>          <!-- Note: Newer accounts use s01 -->
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
