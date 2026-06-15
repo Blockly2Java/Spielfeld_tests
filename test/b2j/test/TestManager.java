@@ -28,13 +28,17 @@ public class TestManager {
     static void testCompilationAndSetup() {
         assertThat(Tests.main).isNotNull();
         assertThat(Tests.main).isInstanceOf(MainWrapper.class);
+        assertThat(Tests.feldGenerator).isNotNull();
+        assertThat(Tests.feldGenerator2D).isNotNull();
     }
     
     @TestFactory
     List<DynamicTest> strukturTests() {
         return structuralTestFactory(
             ONE_FOR_EVERYTHING,
-            Tests.main
+            Tests.main,
+            Tests.feldGenerator,
+            Tests.feldGenerator2D
         );
     }
 
@@ -42,6 +46,56 @@ public class TestManager {
     void testMain() {
         try {
             Tests.testMain();
+        }
+        catch (AssertionError e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void testFeldGeneratorGeneriereFeld() {
+        try {
+            Tests.testFeldGeneratorGeneriereFeld();
+        }
+        catch (AssertionError e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void testFeldGeneratorSetzeFarbe() {
+        try {
+            Tests.testFeldGeneratorSetzeFarbe();
+        }
+        catch (AssertionError e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void testFeldGenerator2DGeneriereFeld() {
+        try {
+            Tests.testFeldGenerator2DGeneriereFeld();
+        }
+        catch (AssertionError e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void testFeldGenerator2DSpalteErzeugen() {
+        try {
+            Tests.testFeldGenerator2DSpalteErzeugen();
+        }
+        catch (AssertionError e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    void testFeldGenerator2DSetzeFarbe() {
+        try {
+            Tests.testFeldGenerator2DSetzeFarbe();
         }
         catch (AssertionError e) {
             fail(e.getMessage());
